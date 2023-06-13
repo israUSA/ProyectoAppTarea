@@ -8,6 +8,125 @@
     tools:context=".activity_CreacionTarea">
 
 
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/Widget.AppCompat.TextView.SpinnerItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="NUEVA TAREA"
+        android:textSize="24sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Fecha de registro" />
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editTextDateInicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="date" />
+
+        <ImageButton
+            android:id="@+id/bt_inicio_calendario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+
+<!--        <DatePicker-->
+<!--            android:id="@+id/datePickerFechaActual"-->
+<!--            android:layout_width="350dp"-->
+<!--            android:layout_height="400dp"-->
+<!--            android:visibility="gone" />-->
+      </LinearLayout>
 
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Nombre de tarea" />
+
+      <EditText
+          android:id="@+id/et_nombre_tarea"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Descripción" />
+
+      <EditText
+          android:id="@+id/editTextTextMultiLine4"
+          android:layout_width="379dp"
+          android:layout_height="104dp"
+          android:ems="10"
+          android:gravity="start|top"
+          android:inputType="textMultiLine" />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Fecha de vencimiento" />
+
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editTextDateFinal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="date" />
+
+
+        <ImageButton
+            android:id="@+id/bt_fin_calendario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+
+<!--        <DatePicker-->
+<!--            android:id="@+id/datePickerFechaFinal"-->
+<!--            android:layout_width="350dp"-->
+<!--            android:layout_height="400dp"-->
+<!--            android:visibility="gone" />-->
+      </LinearLayout>
+
+      <Button
+          android:id="@+id/btn_guardar"
+          android:layout_marginTop="10dp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Guardar" />
+
+
+    </LinearLayout>
+  </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

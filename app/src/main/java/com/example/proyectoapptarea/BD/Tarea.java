@@ -5,8 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class Tarea extends SQLiteOpenHelper {
-    private static final String COMMENTS_TABLE_CREATE = "CREATE TABLE Tarea ( id INTEGER PRIMARY KEY AUTOINCREMENT, titulo_tarea TEXT, fechaCreacion Datetime, fechaVencimiento DateTime";
-    private static final String BD_NAME = "datosTarea.sqlite";
+    private static final String COMMENTS_TABLE_CREATE = "CREATE TABLE Tarea (id INTEGER PRIMARY KEY AUTOINCREMENT, titulo_tarea TEXT, descripcion TEXT, fechaCreacion DATETIME, fechaVencimiento DATETIME)";
+    private static final String BD_NAME = "BDTarea.sqlite";
     private static final int DB_VERSION = 1;
 
     public Tarea (Context context){
