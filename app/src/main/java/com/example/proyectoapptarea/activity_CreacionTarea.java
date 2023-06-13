@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -110,25 +111,56 @@ import java.util.Date;
             EditText MultiText_Descripcion_tmp = (EditText) findViewById(R.id.MultiText_Descripcion);
             EditText editTextDateFinal_tmp = (EditText) findViewById(R.id.editTextDateFinal);
 
-            BDTareaApp bdTareaApp = new BDTareaApp(v.getContext());
-            final SQLiteDatabase db = bdTareaApp.getWritableDatabase();
-            if (db!= null){
-                //hacemos la operacion agregar
-                ContentValues cv = new ContentValues();
-                cv.put("fechaCreacion", editTextDateInicio_tmp.getText().toString());
-                cv.put("titulo_tarea", nombre_tarea_tmp.getText().toString());
-                cv.put("descripcion", MultiText_Descripcion_tmp.getText().toString());
-                cv.put("fechaVencimiento", editTextDateFinal_tmp.getText().toString());
-                db.insert("Tarea",null,cv);
-                Toast.makeText(v.getContext(), "Genial, Tenemos una nueva tarea", Toast.LENGTH_LONG).show();
+            String fechaInicio = editTextDateInicio_tmp.getText().toString().trim();
+            String nombreTarea = nombre_tarea_tmp.getText().toString().trim();
+            String descripcion = MultiText_Descripcion_tmp.getText().toString().trim();
+            String fechaFinal = editTextDateFinal_tmp.getText().toString().trim();
 
+            if (fechaInicio.isEmpty()) {
+                editTextDateInicio_tmp.setError("Ingrese la fecha de inicio");
+                return;
             }
 
+            if (nombreTarea.isEmpty()) {
+                nombre_tarea_tmp.setError("Ingrese el nombre de la tarea");
+                return;
+            }
+
+            if (descripcion.isEmpty()) {
+                MultiText_Descripcion_tmp.setError("Ingrese la descripción de la tarea");
+                return;
+            }
+
+            if (fechaFinal.isEmpty()) {
+                editTextDateFinal_tmp.setError("Ingrese la fecha final");
+                return;
+            }
+
+            try {
+                BDTareaApp bdTareaApp = new BDTareaApp(v.getContext());
+                final SQLiteDatabase db = bdTareaApp.getWritableDatabase();
+                if (db!= null){
+                    //hacemos la operacion agregar
+                    ContentValues cv = new ContentValues();
+                    cv.put("fechaCreacion", editTextDateInicio_tmp.getText().toString());
+                    cv.put("titulo_tarea", nombre_tarea_tmp.getText().toString());
+                    cv.put("descripcion", MultiText_Descripcion_tmp.getText().toString());
+                    cv.put("fechaVencimiento", editTextDateFinal_tmp.getText().toString());
+                    db.insert("Tarea",null,cv);
+                    Toast.makeText(v.getContext(), "Genial, Tenemos una nueva tarea", Toast.LENGTH_LONG).show();
+                }
+                db.close();
+                Intent regreso = new Intent(v.getContext(), MainActivity.class);
+                startActivity(regreso);
+            } catch (Exception ex){
+                Toast.makeText(v.getContext(), "Ups, algo ocurrio..", Toast.LENGTH_LONG).show();
+            }
         }
 
-
-
-
+        public void cerrarVentana(View v){
+            Intent regreso = new Intent(v.getContext(), MainActivity.class);
+            startActivity(regreso);
+        }
 
     }
 
