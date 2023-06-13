@@ -66,7 +66,7 @@
           android:text="Nombre de tarea" />
 
       <EditText
-          android:id="@+id/et_nombre_tarea"
+          android:id="@+id/nombre_tarea"
           android:layout_width="match_parent"
           android:layout_height="wrap_content" />
 
@@ -76,7 +76,7 @@
           android:text="Descripción" />
 
       <EditText
-          android:id="@+id/editTextTextMultiLine4"
+          android:id="@+id/MultiText_Descripcion"
           android:layout_width="379dp"
           android:layout_height="104dp"
           android:ems="10"
@@ -118,9 +118,10 @@
 
       <Button
           android:id="@+id/btn_guardar"
-          android:layout_marginTop="10dp"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:onClick="GuardarTarea"
           android:text="Guardar" />
 
 

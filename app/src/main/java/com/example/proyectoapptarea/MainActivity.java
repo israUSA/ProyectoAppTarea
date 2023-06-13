@@ -20,9 +20,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(aggTarea);
     }
 
-    public void mostrar_tarea(View v){
-        Intent call_tarea = new Intent(v.getContext(), activity_mostrar_tareas.class);
-        startActivity(call_tarea);
+    public void mostrarTarea(View v){
+        Intent mostrarTareas = new Intent(v.getContext(), activity_mostrar_tareas.class);
+        startActivity(mostrarTareas);
     }
 
 
