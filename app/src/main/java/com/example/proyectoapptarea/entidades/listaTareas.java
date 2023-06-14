@@ -21,6 +21,10 @@ public class listaTareas {
         this.fechaVencimiento = fechaVencimiento;
     }
 
+    public listaTareas() {
+
+    }
+
     public int getId() {
         return id;
     }

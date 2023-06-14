@@ -47,11 +47,12 @@ import java.util.List;
                         String descripcion = ct.getString(ct.getColumnIndex("descripcion"));
                         String fechaLimite = ct.getString(ct.getColumnIndex("fechaVencimiento"));
                         listaTareas tarea = new listaTareas(titulo, descripcion, fechaLimite);
+
                         elements.add(tarea);
                     } while (ct.moveToNext());
                 }
                 ct.close();
-                db.close();
+/*                db.close();*/
             }
         }
 

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.proyectoapptarea.entidades.listaTareas;
+
 public class BDTareaApp extends SQLiteOpenHelper {
     private static final String COMMENTS_TABLE_CREATE = "CREATE TABLE Tarea (id INTEGER PRIMARY KEY AUTOINCREMENT, fechaCreacion DATETIME, titulo_tarea TEXT, descripcion TEXT, fechaVencimiento DATETIME)";
     private static final String BD_NAME = "BDTarea.sqlite";
