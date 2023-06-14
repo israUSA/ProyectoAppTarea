@@ -1,41 +1,84 @@
 package com.example.proyectoapptarea;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.proyectoapptarea.BD.BDTareaApp;
+import com.example.proyectoapptarea.adaptador.listaAdaptador;
+import com.example.proyectoapptarea.entidades.listaTareas;
+
+import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 
-public class activity_mostrar_tareas extends AppCompatActivity  {
+    public class activity_mostrar_tareas extends AppCompatActivity {
+        List<listaTareas> elements;
+        listaAdaptador listAdapter;
 
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_mostrar_tareas);
+            init();
+        }
 
+        @SuppressLint("Range")
+        private void obtenerDatosDeLaBaseDeDatos() {
+            BDTareaApp bdTareaApp = new BDTareaApp(this);
+            SQLiteDatabase db = bdTareaApp.getWritableDatabase();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_creacion_tarea);
+            if (db != null) {
+                elements = new ArrayList<>();
+                TextView tituloTmp = findViewById(R.id.ViuwTitulo);
+                TextView descripcionTmp = findViewById(R.id.ViuwDescripcion);
+                TextView FechaLimiteTmp = findViewById(R.id.ViuwFechaLimite);
 
+                Cursor ct = db.rawQuery("SELECT titulo_tarea, descripcion, fechaVencimiento FROM Tarea", null);
+                if (ct.moveToFirst()) {
+                    do {
+                        String titulo = ct.getString(ct.getColumnIndex("titulo_tarea"));
+                        String descripcion = ct.getString(ct.getColumnIndex("descripcion"));
+                        String fechaLimite = ct.getString(ct.getColumnIndex("fechaVencimiento"));
+                        listaTareas tarea = new listaTareas(titulo, descripcion, fechaLimite);
+                        elements.add(tarea);
+                    } while (ct.moveToNext());
+                }
+                ct.close();
+                db.close();
+            }
+        }
+
+        public void init() {
+            obtenerDatosDeLaBaseDeDatos();
+            listAdapter = new listaAdaptador(elements, this);
+            RecyclerView recyclerView = findViewById(R.id.cardTareas);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(listAdapter);
+            listAdapter.notifyDataSetChanged();
+        }
     }
-}
 
 
 
 
 
 
-//                @Override
-//                public void onDateSet(DatePicker view, int dayOfMonth, int monthOfYear, int year) {
-//                    editTextDateInicio.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-//                }
-//            }, dia, mes, ano);
-//            datePickerDialog.show();
 
