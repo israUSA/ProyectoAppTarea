@@ -1,22 +1,23 @@
 package com.example.proyectoapptarea.entidades;
 
 
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import java.sql.Date;
 
 public class listaTareas {
     private int id;
-    private Date fechaCreacion;
+    private String fechaCreacion;
     private String titulo_tarea;
     private String descripcion;
-    private Date fechaVencimiento;
+    private String fechaVencimiento;
 
-    public listaTareas(TextView titulo, TextView descripcion, TextView fechaLimite) {
+    public listaTareas(String titulo_tarea, String descripcion, String fechaVencimiento) {
         this.id = id;
         this.fechaCreacion = fechaCreacion;
         this.titulo_tarea = titulo_tarea;
-        this.descripcion = this.descripcion;
+        this.descripcion = descripcion;
         this.fechaVencimiento = fechaVencimiento;
     }
 
@@ -28,11 +29,11 @@ public class listaTareas {
         this.id = id;
     }
 
-    public Date getFechaCreacion() {
+    public String getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(Date fechaCreacion) {
+    public void setFechaCreacion(String fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
@@ -52,11 +53,11 @@ public class listaTareas {
         this.descripcion = descripcion;
     }
 
-    public Date getFechaVencimiento() {
+    public String getFechaVencimiento() {
         return fechaVencimiento;
     }
 
-    public void setFechaVencimiento(Date fechaVencimiento) {
+    public void setFechaVencimiento(String fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
     }
 }

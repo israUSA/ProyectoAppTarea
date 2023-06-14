@@ -27,12 +27,6 @@ public class listaAdaptador extends RecyclerView.Adapter<listaAdaptador.ViewHold
     }
 
     @Override
-    public listaAdaptador.ViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.lista_tarea,null);
-        return new listaAdaptador.ViewHolder(view);
-    }
-
-    @Override
     public void onBindViewHolder(final listaAdaptador.ViewHolder holder,final int position) {
         holder.bindData(mData.get(position));
     }
@@ -40,6 +34,12 @@ public class listaAdaptador extends RecyclerView.Adapter<listaAdaptador.ViewHold
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    @Override
+    public listaAdaptador.ViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
+        View view = mInflater.inflate(R.layout.lista_tarea,null);
+        return new listaAdaptador.ViewHolder(view);
     }
 
     public void setItems(List<listaTareas>items){
@@ -51,7 +51,6 @@ public class listaAdaptador extends RecyclerView.Adapter<listaAdaptador.ViewHold
 
         ViewHolder(View itemView){
             super(itemView);
-
             ViuwTitulo = itemView.findViewById(R.id.ViuwTitulo);
             ViuwDescripcion = itemView.findViewById(R.id.ViuwDescripcion);
             ViuwFechaLimite = itemView.findViewById(R.id.ViuwFechaLimite);
@@ -60,7 +59,7 @@ public class listaAdaptador extends RecyclerView.Adapter<listaAdaptador.ViewHold
         void bindData (final listaTareas item){
             ViuwTitulo.setText(item.getTitulo_tarea());
             ViuwDescripcion.setText(item.getDescripcion());
-            ViuwFechaLimite.setText((CharSequence) item.getFechaVencimiento());
+            ViuwFechaLimite.setText(item.getFechaVencimiento());
 
         }
 
