@@ -34,6 +34,7 @@ public class listaAdaptador extends RecyclerView.Adapter<listaAdaptador.ViewHold
 
     }
 
+
     @Override
     public void onBindViewHolder(final listaAdaptador.ViewHolder holder,final int position) {
         holder.bindData(mData.get(position));

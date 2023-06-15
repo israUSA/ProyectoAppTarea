@@ -18,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.proyectoapptarea.BD.BDTareaApp;
-import com.example.proyectoapptarea.BD.BdTarea;
 import com.example.proyectoapptarea.adaptador.listaAdaptador;
 import com.example.proyectoapptarea.entidades.listaTareas;
 import java.util.ArrayList;
@@ -29,15 +28,27 @@ import java.util.List;
         listaAdaptador listAdapter;
         EditText editTextSearch;
         Button buttonSearch;
-        listaTareas tareas;
-        String nombre;
+        RecyclerView cardTareas;
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
-            setContentView(R.layout.activity_mostrar_tareas);
             super.onCreate(savedInstanceState);
+            editTextSearch = findViewById(R.id.editTextSearch);
+            buttonSearch = findViewById(R.id.buttonSearch);
+            cardTareas = findViewById(R.id.cardTareas);
+            setContentView(R.layout.activity_mostrar_tareas);
             init();
-        }
 
+            buttonSearch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+/*                    String searchText = editTextSearch.getText().toString();*/
+                    Log.d("HOLA", "TEXTO BUSC: ");
+                }
+            });
+
+
+        }
 
         @SuppressLint("Range")
         private void obtenerDatosDeLaBaseDeDatos() {
@@ -65,6 +76,36 @@ import java.util.List;
 /*                db.close();*/
             }
         }
+
+/*        @SuppressLint("Range")
+        private void obtenerDatosDeLaBaseDeDatosBusqueda() {
+            BDTareaApp bdTareaApp = new BDTareaApp(this);
+            SQLiteDatabase db = bdTareaApp.getWritableDatabase();
+
+            editTextSearch = findViewById(R.id.editTextSearch);
+            String nombre = editTextSearch.getText().toString();
+
+            if (db != null) {
+                elements = new ArrayList<>();
+//                TextView tituloTmp = findViewById(R.id.ViuwTitulo);
+//                TextView descripcionTmp = findViewById(R.id.ViuwDescripcion);
+//                TextView FechaLimiteTmp = findViewById(R.id.ViuwFechaLimite);
+
+                Cursor ct = db.rawQuery("SELECT * FROM Tarea WHERE titulo_tarea LIKE '%" + nombre + "%'");
+                if (ct.moveToFirst()) {
+                    do {
+                        String titulo = ct.getString(ct.getColumnIndex("titulo_tarea"));
+                        String descripcion = ct.getString(ct.getColumnIndex("descripcion"));
+                        String fechaLimite = ct.getString(ct.getColumnIndex("fechaVencimiento"));
+                        listaTareas tarea = new listaTareas(titulo, descripcion, fechaLimite);
+
+                        elements.add(tarea);
+                    } while (ct.moveToNext());
+                }
+                ct.close();
+                //db.close();
+            }
+        }*/
 
         public void init() {
             obtenerDatosDeLaBaseDeDatos();

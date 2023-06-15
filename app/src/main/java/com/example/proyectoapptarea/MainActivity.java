@@ -1,11 +1,24 @@
 package com.example.proyectoapptarea;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.service.autofill.OnClickAction;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.example.proyectoapptarea.BD.BDTareaApp;
+import com.example.proyectoapptarea.adaptador.listaAdaptador;
+import com.example.proyectoapptarea.entidades.listaTareas;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
     }
 
     public void agregarTarea(View v){
