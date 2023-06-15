@@ -9,6 +9,9 @@ import androidx.annotation.Nullable;
 
 import com.example.proyectoapptarea.entidades.listaTareas;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BdTarea extends BDTareaApp{
 
     Context context;
@@ -86,4 +89,62 @@ public class BdTarea extends BDTareaApp{
 
         return correcto;
     }
+
+    public listaTareas buscarTarea(String nombre) {
+
+        listaTareas tareas = null;
+        Cursor cursorTarea;
+
+        BDTareaApp dbHelper = new BDTareaApp(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        String tableName = "Tarea";
+        String[] columns = null;
+        String selection = "titulo_tarea LIKE '%" + nombre + "%'";
+        cursorTarea = db.query(tableName, columns, selection, null, null, null, null);
+
+        if(cursorTarea != null) {
+            if (cursorTarea.moveToFirst()) {
+                tareas = new listaTareas();
+                tareas.setTitulo_tarea(cursorTarea.getString(2));
+                tareas.setFechaVencimiento(cursorTarea.getString(4));
+                tareas.setDescripcion(cursorTarea.getString(3));
+                tareas.setFechaCreacion(cursorTarea.getString(1));
+            }else {
+                int columnIndex = cursorTarea.getColumnIndex("titulo_tarea");
+            }
+        }
+
+        cursorTarea.close();
+
+
+        return tareas;
+    }
+
+/*    public List<listaTareas> searchTasks(String query) {
+        List<listaTareas> results = new ArrayList<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        String COLUMN_NOMBRE = "titulo_tarea";
+
+        String selection = COLUMN_NOMBRE + " LIKE ?";
+        String[] selectionArgs = {"%" + query + "%"};
+        String TABLE_NAME = "Tarea";
+
+        Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                String nombre = cursor.getString(cursor.getColumnIndex(COLUMN_NOMBRE));
+                listaTareas tarea = new listaTareas(nombre);
+                results.add(tarea);
+            } while (cursor.moveToNext());
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        return results;
+    }*/
 }

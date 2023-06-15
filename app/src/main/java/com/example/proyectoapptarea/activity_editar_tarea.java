@@ -24,7 +24,7 @@ import java.util.Date;
 public class activity_editar_tarea extends AppCompatActivity implements View.OnClickListener {
 
     EditText txtNombre, txtFecha, txtDescripcion;
-    Button btnGuarda, btnEditar;
+    Button btnGuarda, btnEditar, btnCancelar;
     ImageButton bt_fin_calendario;
     listaTareas tareas;
     int id = 0;
@@ -41,6 +41,7 @@ public class activity_editar_tarea extends AppCompatActivity implements View.OnC
         btnGuarda = findViewById(R.id.btnGuarda);
         btnEditar = findViewById(R.id.btnModificar);
         bt_fin_calendario = findViewById(R.id.bt_fin_calendario);
+        btnCancelar = findViewById(R.id.btnCancelar);
 
         if(savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -77,6 +78,15 @@ public class activity_editar_tarea extends AppCompatActivity implements View.OnC
                 } else {
                     Toast.makeText(activity_editar_tarea.this, "DEBE LLENAR LOS CAMPOS OBLIGATORIOS", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity_editar_tarea.this, activity_mostrar_tareas.class);
+                intent.putExtra("ID", id);
+                startActivity(intent);
             }
         });
 
