@@ -34,13 +34,6 @@ public class listaAdaptador extends RecyclerView.Adapter<listaAdaptador.ViewHold
 
     }
 
-/*    @NonNull
-    @Override
-    public TareaVer onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_mostrar_tareas, null, false);
-        return new TareaVer(view);
-    }*/
-
     @Override
     public void onBindViewHolder(final listaAdaptador.ViewHolder holder,final int position) {
         holder.bindData(mData.get(position));
@@ -59,9 +52,6 @@ public class listaAdaptador extends RecyclerView.Adapter<listaAdaptador.ViewHold
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_tarea, null, false);
         return new listaAdaptador.ViewHolder(view);
     }
-
-
-
 
     public void setItems(List<listaTareas>items){
         mData= items;
@@ -86,18 +76,6 @@ public class listaAdaptador extends RecyclerView.Adapter<listaAdaptador.ViewHold
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    /*Context context = view.getContext();
-                    Intent intent = new Intent(context, activity_ver_tarea.class);
-                    intent.putExtra("ID", mData.get(getAdapterPosition()).getId());
-                    context.startActivity(intent);
-
-                    int position = getAdapterPosition();
-                    listaTareas tarea = mData.get(position);
-                    int id = tarea.getId();
-                    Log.d("Adapter", "id: " + mData.get(position).getId());
-
-                    Log.d("TAG", "Posición seleccionada: " + position);*/
-
                     int position = getAdapterPosition();
 
                     if (position != RecyclerView.NO_POSITION) {
@@ -117,29 +95,5 @@ public class listaAdaptador extends RecyclerView.Adapter<listaAdaptador.ViewHold
             ViuwFechaLimite.setText(item.getFechaVencimiento());
         }
     }
-
-/*    public class TareaVer extends RecyclerView.ViewHolder {
-
-        TextView viewNombre, viewFecha, viewDescripcion;
-
-        public TareaVer(@NonNull View itemView) {
-            super(itemView);
-
-            viewNombre = itemView.findViewById(R.id.viewNombre);
-            viewFecha = itemView.findViewById(R.id.viewFecha);
-            viewDescripcion = itemView.findViewById(R.id.viewDescripcion);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Context context = view.getContext();
-                    Intent intent = new Intent(context, activity_ver_tarea.class);
-                    intent.putExtra("ID", listaTareas.get(getAdapterPosition()).getId());
-                    context.startActivity(intent);
-                }
-            });
-
-        }
-    }*/
 
 }
