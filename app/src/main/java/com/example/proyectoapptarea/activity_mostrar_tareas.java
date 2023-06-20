@@ -55,6 +55,7 @@ public class activity_mostrar_tareas extends AppCompatActivity {
         BDTareaApp bdTareaApp = new BDTareaApp(this);
         SQLiteDatabase db = bdTareaApp.getWritableDatabase();
 
+
         if (db != null) {
             elements = new ArrayList<>();
 
@@ -71,7 +72,7 @@ public class activity_mostrar_tareas extends AppCompatActivity {
                 } while (ct.moveToNext());
             }
             ct.close();
-            db.close();
+            //db.close();
         }
     }
 

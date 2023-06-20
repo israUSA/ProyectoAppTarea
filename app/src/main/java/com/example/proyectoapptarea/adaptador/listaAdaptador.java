@@ -83,7 +83,7 @@ public class listaAdaptador extends RecyclerView.Adapter<listaAdaptador.ViewHold
                     if (position != RecyclerView.NO_POSITION) {
                         Context context = view.getContext();
                         Intent intent = new Intent(context, activity_ver_tarea.class);
-                        intent.putExtra("ID", position+1);
+                        intent.putExtra("ID", position);
                         context.startActivity(intent);
                     }
 

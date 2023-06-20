@@ -164,6 +164,10 @@ import java.util.Date;
             try {
                 BDTareaApp bdTareaApp = new BDTareaApp(v.getContext());
                 final SQLiteDatabase db = bdTareaApp.getWritableDatabase();
+
+/*                String sentenciaSql = "CREATE TABLE Tarea (id INTEGER PRIMARY KEY AUTOINCREMENT, fechaCreacion DATETIME, titulo_tarea TEXT, descripcion TEXT, fechaVencimiento DATETIME, hora TIME, prioridad INTEGER, completada INTEGER DEFAULT 0)";
+                db.execSQL(sentenciaSql);*/
+
                 if (db!= null){
                     //hacemos la operacion agregar
                     ContentValues cv = new ContentValues();
@@ -175,7 +179,7 @@ import java.util.Date;
                     db.insert("Tarea",null,cv);
                     Toast.makeText(v.getContext(), "Genial, Tenemos una nueva tarea", Toast.LENGTH_LONG).show();
                 }
-                db.close();
+                //db.close();
                 Intent regreso = new Intent(v.getContext(), MainActivity.class);
                 startActivity(regreso);
             } catch (Exception ex){

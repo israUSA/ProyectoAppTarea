@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.proyectoapptarea.entidades.listaTareas;
 
 public class BDTareaApp extends SQLiteOpenHelper {
-    private static final String COMMENTS_TABLE_CREATE = "CREATE TABLE Tarea (id INTEGER PRIMARY KEY AUTOINCREMENT, fechaCreacion DATETIME, titulo_tarea TEXT, descripcion TEXT, fechaVencimiento DATETIME)";
+    private static final String COMMENTS_TABLE_CREATE = "CREATE TABLE Tarea (id INTEGER PRIMARY KEY AUTOINCREMENT, fechaCreacion DATETIME, titulo_tarea TEXT, descripcion TEXT, fechaVencimiento DATETIME, hora TIME, prioridad INTEGER, completada INTEGER DEFAULT 0)";
     private static final String BD_NAME = "BDTarea.sqlite";
     private static final int DB_VERSION = 4;
 
@@ -21,11 +21,8 @@ public class BDTareaApp extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 4) {
-            db.execSQL("ALTER TABLE Tarea ADD COLUMN hora TIME");
-            db.execSQL("ALTER TABLE Tarea ADD COLUMN prioridad INTEGER");
-            db.execSQL("ALTER TABLE Tarea ADD COLUMN completada INTEGER DEFAULT 0");
-        }
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
     }
+
+
 }
