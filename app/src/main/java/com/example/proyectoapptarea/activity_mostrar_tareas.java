@@ -58,13 +58,14 @@ public class activity_mostrar_tareas extends AppCompatActivity {
         if (db != null) {
             elements = new ArrayList<>();
 
-            Cursor ct = db.rawQuery("SELECT titulo_tarea, descripcion, fechaVencimiento FROM Tarea", null);
+            Cursor ct = db.rawQuery("SELECT titulo_tarea, descripcion, fechaVencimiento,hora FROM Tarea", null);
             if (ct.moveToFirst()) {
                 do {
                     String titulo = ct.getString(ct.getColumnIndex("titulo_tarea"));
                     String descripcion = ct.getString(ct.getColumnIndex("descripcion"));
                     String fechaLimite = ct.getString(ct.getColumnIndex("fechaVencimiento"));
-                    listaTareas tarea = new listaTareas(titulo, descripcion, fechaLimite);
+                    String hora = ct.getString(ct.getColumnIndex("hora"));
+                    listaTareas tarea = new listaTareas(titulo, descripcion, fechaLimite,hora);
 
                     elements.add(tarea);
                 } while (ct.moveToNext());
@@ -93,7 +94,8 @@ public class activity_mostrar_tareas extends AppCompatActivity {
                     String titulo = ct.getString(ct.getColumnIndex("titulo_tarea"));
                     String descripcion = ct.getString(ct.getColumnIndex("descripcion"));
                     String fechaLimite = ct.getString(ct.getColumnIndex("fechaVencimiento"));
-                    listaTareas tarea = new listaTareas(titulo, descripcion, fechaLimite);
+                    String hora = ct.getString(ct.getColumnIndex("hora"));
+                    listaTareas tarea = new listaTareas(titulo, descripcion, fechaLimite, hora);
 
                     elements.add(tarea);
                 } while (ct.moveToNext());

@@ -12,13 +12,15 @@ public class listaTareas {
     private String titulo_tarea;
     private String descripcion;
     private String fechaVencimiento;
+    private String hora;
 
-    public listaTareas(String titulo_tarea, String descripcion, String fechaVencimiento) {
+    public listaTareas(String titulo_tarea, String descripcion, String fechaVencimiento, String hora) {
         this.id = id;
         this.fechaCreacion = fechaCreacion;
         this.titulo_tarea = titulo_tarea;
         this.descripcion = descripcion;
         this.fechaVencimiento = fechaVencimiento;
+        this.hora = hora;
     }
 
     public listaTareas() {
@@ -63,5 +65,12 @@ public class listaTareas {
 
     public void setFechaVencimiento(String fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
+    }
+
+    public String gethora() {
+        return hora;
+    }
+    public void sethora(String hora) {
+        this.hora = hora;
     }
 }

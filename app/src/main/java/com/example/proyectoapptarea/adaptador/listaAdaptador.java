@@ -59,7 +59,7 @@ public class listaAdaptador extends RecyclerView.Adapter<listaAdaptador.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView ViuwTitulo, ViuwDescripcion, ViuwFechaLimite;
+        TextView ViuwTitulo, ViuwDescripcion, ViuwFechaLimite,horaLimite;
 
         TextView viewNombre, viewFecha, viewDescripcion;
 
@@ -68,6 +68,7 @@ public class listaAdaptador extends RecyclerView.Adapter<listaAdaptador.ViewHold
             ViuwTitulo = itemView.findViewById(R.id.ViuwTitulo);
             ViuwDescripcion = itemView.findViewById(R.id.ViuwDescripcion);
             ViuwFechaLimite = itemView.findViewById(R.id.ViuwFechaLimite);
+            horaLimite = itemView.findViewById(R.id.horaLimite);
 
             viewNombre = itemView.findViewById(R.id.viewNombre);
             viewFecha = itemView.findViewById(R.id.viewFecha);
@@ -94,6 +95,7 @@ public class listaAdaptador extends RecyclerView.Adapter<listaAdaptador.ViewHold
             ViuwTitulo.setText(item.getTitulo_tarea());
             ViuwDescripcion.setText(item.getDescripcion());
             ViuwFechaLimite.setText(item.getFechaVencimiento());
+            horaLimite.setText(item.gethora());
         }
     }
 
