@@ -1,10 +1,13 @@
 package com.example.proyectoapptarea;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -95,6 +98,62 @@ public class activity_mostrar_tareas extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("Range")
+    private void obtenerDatosPorFecha() {
+        BDTareaApp bdTareaApp = new BDTareaApp(this);
+        SQLiteDatabase db = bdTareaApp.getWritableDatabase();
+
+
+        if (db != null) {
+            String consulta = "SELECT * FROM Tarea ORDER BY fechaVencimiento ASC";
+            Cursor ct = db.rawQuery(consulta, null);
+
+            elements.clear(); // Eliminar los elementos anteriores en lugar de crear una nueva instancia
+
+            if (ct.moveToFirst()) {
+                do {
+                    String titulo = ct.getString(ct.getColumnIndex("titulo_tarea"));
+                    String descripcion = ct.getString(ct.getColumnIndex("descripcion"));
+                    String fechaLimite = ct.getString(ct.getColumnIndex("fechaVencimiento"));
+                    String hora = ct.getString(ct.getColumnIndex("hora"));
+                    listaTareas tarea = new listaTareas(titulo, descripcion, fechaLimite, hora);
+
+                    elements.add(tarea);
+                } while (ct.moveToNext());
+            }
+            ct.close();
+            db.close();
+        }
+    }
+
+    @SuppressLint("Range")
+    private void obtenerDatorPorRelevancia() {
+        BDTareaApp bdTareaApp = new BDTareaApp(this);
+        SQLiteDatabase db = bdTareaApp.getWritableDatabase();
+
+
+        if (db != null) {
+            String consulta = "SELECT * FROM Tarea ORDER BY completada ASC";
+            Cursor ct = db.rawQuery(consulta, null);
+
+            elements.clear(); // Eliminar los elementos anteriores en lugar de crear una nueva instancia
+
+            if (ct.moveToFirst()) {
+                do {
+                    String titulo = ct.getString(ct.getColumnIndex("titulo_tarea"));
+                    String descripcion = ct.getString(ct.getColumnIndex("descripcion"));
+                    String fechaLimite = ct.getString(ct.getColumnIndex("fechaVencimiento"));
+                    String hora = ct.getString(ct.getColumnIndex("hora"));
+                    listaTareas tarea = new listaTareas(titulo, descripcion, fechaLimite, hora);
+
+                    elements.add(tarea);
+                } while (ct.moveToNext());
+            }
+            ct.close();
+            db.close();
+        }
+    }
+
 
     public void init() {
         obtenerDatosDeLaBaseDeDatos();
@@ -110,6 +169,7 @@ public class activity_mostrar_tareas extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_mostrar_tareas, menu);
         MenuItem searchItem = menu.findItem(R.id.it_search);
+        MenuItem orderItem = menu.findItem(R.id.it_configuraciones);
         SearchView searchView = (SearchView) searchItem.getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -132,6 +192,13 @@ public class activity_mostrar_tareas extends AppCompatActivity {
             }
         });
 
+        orderItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem menuItem) {
+                showOrdenarDialog();
+                return true;
+            }
+        });
 
         return true;
     }
@@ -149,7 +216,35 @@ public class activity_mostrar_tareas extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
         }
     }
+
+    private void showOrdenarDialog() {
+        final CharSequence[] opciones = {"Relevancia", "Fecha", "Defecto"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Ordenar por")
+                .setItems(opciones, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                // Opción Relevancia seleccionada
+                                obtenerDatorPorRelevancia();
+                                listAdapter.notifyDataSetChanged();
+                                break;
+                            case 1:
+                                // Opción Fecha seleccionada
+                                obtenerDatosPorFecha();
+                                listAdapter.notifyDataSetChanged();
+                                break;
+                            case 2:
+                                // Opcion por defecto seleccionada
+                                init();
+                                break;
+                        }
+                    }
+                });
+        builder.show();
+    }
 }
+
 
 
 

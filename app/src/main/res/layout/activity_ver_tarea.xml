@@ -125,10 +125,10 @@
 <!--    </LinearLayout>-->
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
 
 
         <TextView
@@ -141,112 +141,130 @@
             android:textSize="24sp" />
 
 
-            <TextView
-                android:id="@+id/viewNombre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Nombre de tarea" />
+        <TextView
+            android:id="@+id/viewNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre de tarea" />
+
+        <EditText
+            android:id="@+id/txtNombre"
+            android:layout_width="354dp"
+            android:layout_height="wrap_content"
+            android:labelFor="@+id/viewNombre" />
+
+        <TextView
+            android:id="@+id/viewDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Descripción" />
+
+        <EditText
+            android:id="@+id/txtDescripcion"
+            android:layout_width="355dp"
+            android:layout_height="94dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:labelFor="@+id/viewDescripcion" />
+
+        <TextView
+            android:id="@+id/viewFecha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fecha de vencimiento" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/txtNombre"
-                android:layout_width="354dp"
-                android:labelFor="@+id/viewNombre"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/viewDescripcion"
+                android:id="@+id/txtFecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Descripción" />
-
-            <EditText
-                android:id="@+id/txtDescripcion"
-                android:layout_width="355dp"
-                android:layout_height="94dp"
                 android:ems="10"
-                android:gravity="start|top"
-                android:labelFor="@+id/viewDescripcion"
-                android:inputType="textMultiLine" />
-
-            <TextView
-                android:id="@+id/viewFecha"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Fecha de vencimiento" />
+                android:inputType="date"
+                android:labelFor="@+id/viewFecha" />
 
 
-            <LinearLayout
+            <ImageButton
+                android:id="@+id/bt_fin_calendario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_weight="1"
+                app:srcCompat="@android:drawable/ic_menu_my_calendar" />
 
-                <EditText
-                    android:id="@+id/txtFecha"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:labelFor="@+id/viewFecha"
-                    android:inputType="date" />
-
-
-                <ImageButton
-                    android:id="@+id/bt_fin_calendario"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:srcCompat="@android:drawable/ic_menu_my_calendar" />
-
-                <!--        <DatePicker-->
-                <!--            android:id="@+id/datePickerFechaFinal"-->
-                <!--            android:layout_width="350dp"-->
-                <!--            android:layout_height="400dp"-->
-                <!--            android:visibility="gone" />-->
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btnGuarda"
-                    android:layout_width="160dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:onClick="GuardarTarea"
-                    android:text="Guardar" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="61dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btnModificar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:text="Modificar" />
-
-                <Button
-                    android:id="@+id/btnEliminar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Eliminar" />
-
-                <Button
-                    android:id="@+id/btnCancelar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:text="Volver" />
-            </LinearLayout>-->
+            <!--        <DatePicker-->
+            <!--            android:id="@+id/datePickerFechaFinal"-->
+            <!--            android:layout_width="350dp"-->
+            <!--            android:layout_height="400dp"-->
+            <!--            android:visibility="gone" />-->
         </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnGuarda"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:onClick="GuardarTarea"
+                android:text="Guardar" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnModificar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Modificar" />
+
+            <Button
+                android:id="@+id/btnEliminar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Eliminar" />
+
+            <Button
+                android:id="@+id/btnCancelar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Volver" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnTareaCompletada"
+                android:layout_width="195dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Completar tarea" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,7 +24,7 @@ import java.util.Date;
 public class activity_editar_tarea extends AppCompatActivity implements View.OnClickListener {
 
     EditText txtNombre, txtFecha, txtDescripcion;
-    Button btnGuarda, btnEditar, btnCancelar;
+    Button btnGuarda, btnEditar, btnCancelar, btnCompletar;
     ImageButton bt_fin_calendario;
     listaTareas tareas;
     int id = 0;
@@ -42,6 +42,7 @@ public class activity_editar_tarea extends AppCompatActivity implements View.OnC
         btnEditar = findViewById(R.id.btnModificar);
         bt_fin_calendario = findViewById(R.id.bt_fin_calendario);
         btnCancelar = findViewById(R.id.btnCancelar);
+        btnCompletar = findViewById(R.id.btnTareaCompletada);
 
         if(savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -61,6 +62,8 @@ public class activity_editar_tarea extends AppCompatActivity implements View.OnC
             txtNombre.setText(tareas.getTitulo_tarea());
             txtFecha.setText(tareas.getFechaVencimiento());
             txtDescripcion.setText(tareas.getDescripcion());
+            btnCompletar.setVisibility(View.INVISIBLE);
+            btnEditar.setVisibility(View.INVISIBLE);
         }
 
         btnGuarda.setOnClickListener(new View.OnClickListener() {

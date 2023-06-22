@@ -29,7 +29,7 @@ import java.util.Date;
 public class activity_ver_tarea extends AppCompatActivity {
 
     EditText txtNombre, txtFecha, txtDescripcion;
-    Button btnGuarda, btnEditar, btnCancelar, btnEliminar;
+    Button btnGuarda, btnEditar, btnCancelar, btnEliminar, btnCompletaTarea;
     ImageButton bt_fin_calendario;
     listaTareas tareas;
     int id = 0;
@@ -46,6 +46,7 @@ public class activity_ver_tarea extends AppCompatActivity {
         btnEditar = findViewById(R.id.btnModificar);
         btnCancelar = findViewById(R.id.btnCancelar);
         btnEliminar = findViewById(R.id.btnEliminar);
+        btnCompletaTarea = findViewById(R.id.btnTareaCompletada);
         bt_fin_calendario = findViewById(R.id.bt_fin_calendario);
 
         if(savedInstanceState == null) {
@@ -66,6 +67,7 @@ public class activity_ver_tarea extends AppCompatActivity {
             txtNombre.setText(tareas.getTitulo_tarea());
             txtFecha.setText(tareas.getFechaVencimiento());
             txtDescripcion.setText(tareas.getDescripcion());
+            /*btnEditar.setVisibility(View.INVISIBLE);*/
             btnGuarda.setVisibility(View.INVISIBLE);
             bt_fin_calendario.setVisibility(View.INVISIBLE);
             txtNombre.setInputType(InputType.TYPE_NULL);
@@ -83,6 +85,31 @@ public class activity_ver_tarea extends AppCompatActivity {
             }
         });
 
+        btnCompletaTarea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bdTarea.marcarComoCompletada(id);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity_ver_tarea.this);
+                builder.setMessage("¿Desea marcar como completado esta tarea?")
+                        .setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                if(bdTarea.marcarComoCompletada(id)){
+                                    lista();
+                                }
+                            }
+                        })
+                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        }).show();
+            }
+        });
+
         btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,7 +123,7 @@ public class activity_ver_tarea extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity_ver_tarea.this);
-                builder.setMessage("¿Desea eliminar este contacto?")
+                builder.setMessage("¿Desea eliminar este tarea?")
                         .setPositiveButton("SI", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {

@@ -42,7 +42,7 @@ public class BdTarea extends BDTareaApp{
             tareas.setTitulo_tarea(cursorTarea.getString(2));
             tareas.setFechaVencimiento(cursorTarea.getString(4));
             tareas.setDescripcion(cursorTarea.getString(3));
-            Log.d("Aqui", "id de tareas: " + cursorTarea.getInt(0));
+            //Log.d("Aqui", "id de tareas: " + cursorTarea.getInt(0));
         } else {
 
             Log.d("no", "nuevo id: " + id);
@@ -57,30 +57,40 @@ public class BdTarea extends BDTareaApp{
 
     }
 
-    public boolean editarTarea(int id, String titulo_tarea, String fecha, String descripcion) {
+    public boolean editarTarea(int id, String nombre, String fecha, String descripcion) {
 
         boolean correcto = false;
+        int idFinal;
+
+        Cursor cursorTarea;
 
         BDTareaApp dbHelper = new BDTareaApp(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        ContentValues valores = new ContentValues();
+        cursorTarea = db.query("Tarea", null, null, null, null, null, null);
+
+/*        ContentValues valores = new ContentValues();
 
         valores.put("titulo_tarea", titulo_tarea);
         valores.put("descripcion", descripcion);
         valores.put("fechaVencimiento", fecha);
 
-        db.insert("Tarea", null, valores);
+        db.insert("Tarea", null, valores);*/
 
-        /*try {
-            db.execSQL("UPDATE Tarea" + " SET fechaVencimiento = '" + fecha + "', titulo_tarea = '" + nombre + "', descripcion = '" + descripcion + "' WHERE id='" + id + "' ");
-            correcto = true;
+        try {
+            if(cursorTarea.moveToPosition(id)) {
+                Log.d("Aqui", "id de tareas: " + cursorTarea.getInt(0));
+                idFinal = cursorTarea.getInt(0);
+                id = idFinal;
+                db.execSQL("UPDATE Tarea" + " SET fechaVencimiento = '" + fecha + "', titulo_tarea = '" + nombre + "', descripcion = '" + descripcion + "' WHERE id='" + id + "' ");
+                correcto = true;
+            }
         } catch (Exception ex) {
             ex.toString();
             correcto = false;
         } finally {
             db.close();
-        }*/
+        }
 
         return correcto;
     }
@@ -112,7 +122,37 @@ public class BdTarea extends BDTareaApp{
 
     }
 
-    public listaTareas buscarTarea(String nombre) {
+    public boolean marcarComoCompletada(int id) {
+        boolean correcto = false;
+        int idFinal;
+        listaTareas tareas = null;
+        Cursor cursorTarea;
+
+        BDTareaApp dbHelper = new BDTareaApp(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        cursorTarea = db.query("Tarea", null, null, null, null, null, null);
+
+        if(cursorTarea.moveToPosition(id)) {
+            Log.d("Aqui", "id de tareas: " + cursorTarea.getInt(0));
+            idFinal = cursorTarea.getInt(0);
+            id = idFinal;
+
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("completada", 1); // 1 significa verdadero
+            db.update("Tarea", contentValues, "id = ?", new String[] { Integer.toString(id) });
+
+            correcto = true;
+
+        } else {
+
+            Log.d("no", "nuevo id: " + id);
+        }
+        correcto = true;
+        return correcto;
+    }
+
+/*    public listaTareas buscarTarea(String nombre) {
 
         listaTareas tareas = null;
         Cursor cursorTarea;
@@ -141,7 +181,7 @@ public class BdTarea extends BDTareaApp{
 
 
         return tareas;
-    }
+    }*/
 
 /*    public List<listaTareas> searchTasks(String query) {
         List<listaTareas> results = new ArrayList<>();
