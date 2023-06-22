@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/it_search"
+        android:icon="@drawable/sharp_search_24"
+        android:title="Buscar.."
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="collapseActionView|ifRoom" />
+
+    <item
         android:icon="@drawable/baseline_menu_24"
         android:title="mas"
         app:showAsAction="always">
@@ -10,16 +17,8 @@
             <item
                 android:id="@+id/it_configuraciones"
                 android:icon="@drawable/baseline_settings_24"
-                android:title="Configuraciones"/>
+                android:title="Configuraciones" />
 
-            <!--            <item-->
-            <!--                android:id="@+id/item_configuracion"-->
-            <!--                android:icon="@android:drawable/ic_menu_preferences"-->
-            <!--                android:title="Configuraciones" />-->
-                        <item
-                            android:id="@+id/item_acerda_de"
-                            android:icon="@android:drawable/ic_menu_info_details"
-                            android:title="Acerca De" />
 
         </menu>
     </item>

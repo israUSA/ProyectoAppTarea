@@ -30,19 +30,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu_principal, menu);
         return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
 
-        if (itemId == R.id.it_configuraciones) {
-            Log.d("Menu", "Configuraciones");
+        if (itemId == R.id.item_acerda_de) {
+            Log.d("Menu", "Acerca De");
             return true;
-        } else if (itemId == R.id.item_acerda_de) {
-            Log.d("Menu", "acerca de");
-            return true;
+
         } else {
             return super.onOptionsItemSelected(item);
         }
