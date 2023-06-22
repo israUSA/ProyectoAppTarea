@@ -2,6 +2,7 @@ package com.example.proyectoapptarea;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -131,11 +132,16 @@ public class activity_ver_tarea extends AppCompatActivity {
 
         if (itemId == R.id.it_notificaciones) {
             Log.d("Menu", "Notificaciones");
+            showDialog();
             return true;
 
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void showDialog() {
+        NotificacionesDialog.display(getSupportFragmentManager());
     }
 
 }
