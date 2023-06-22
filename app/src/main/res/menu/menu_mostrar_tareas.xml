@@ -16,8 +16,8 @@
         <menu>
             <item
                 android:id="@+id/it_configuraciones"
-                android:icon="@drawable/baseline_settings_24"
-                android:title="Configuraciones" />
+                android:icon="@drawable/baseline_checklist_24"
+                android:title="Ordenar" />
 
 
         </menu>

@@ -13,12 +13,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.widget.SearchView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.proyectoapptarea.BD.BDTareaApp;
 import com.example.proyectoapptarea.adaptador.listaAdaptador;
@@ -111,7 +108,7 @@ public class activity_mostrar_tareas extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu_mostrar_tareas, menu);
         MenuItem searchItem = menu.findItem(R.id.it_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
 
