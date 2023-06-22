@@ -1,24 +1,13 @@
 package com.example.proyectoapptarea;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.service.autofill.OnClickAction;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-
-import com.example.proyectoapptarea.BD.BDTareaApp;
-import com.example.proyectoapptarea.adaptador.listaAdaptador;
-import com.example.proyectoapptarea.entidades.listaTareas;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +26,26 @@ public class MainActivity extends AppCompatActivity {
     public void mostrarTarea(View v){
         Intent mostrarTareas = new Intent(v.getContext(), activity_mostrar_tareas.class);
         startActivity(mostrarTareas);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+
+        if (itemId == R.id.it_configuraciones) {
+            Log.d("Menu", "Configuraciones");
+            return true;
+        } else if (itemId == R.id.item_acerda_de) {
+            Log.d("Menu", "acerca de");
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
 

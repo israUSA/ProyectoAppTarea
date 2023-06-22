@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:icon="@drawable/baseline_menu_24"
+        android:title="mas"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/it_configuraciones"
+                android:icon="@drawable/baseline_settings_24"
+                android:title="Configuraciones"/>
+
+            <!--            <item-->
+            <!--                android:id="@+id/item_configuracion"-->
+            <!--                android:icon="@android:drawable/ic_menu_preferences"-->
+            <!--                android:title="Configuraciones" />-->
+                        <item
+                            android:id="@+id/item_acerda_de"
+                            android:icon="@android:drawable/ic_menu_info_details"
+                            android:title="Acerca De" />
+
+        </menu>
+    </item>
+</menu>
