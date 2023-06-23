@@ -173,26 +173,32 @@ public class NotificacionesDialog extends DialogFragment {
         // Verificar si el texto del chip contiene la palabra "minutos"
         if (textoChip.contains("minutos")) {
             minutos = extraerCantidad(textoChip, "minutos");
+            Log.d("MINUTOS DE MINUTOS", String.valueOf(minutos));
         }
         // Verificar si el texto del chip contiene la palabra "hora"
         else if (textoChip.contains("hora")) {
             minutos = extraerCantidad(textoChip, "hora") * 60;
+            Log.d("MINUTOS DE HORAS", String.valueOf(minutos));
         }
         // Verificar si el texto del chip contiene la palabra "día" o "dias"
-        else if (textoChip.contains("día") || textoChip.contains("dias")) {
+        else if (textoChip.contains("dia") || textoChip.contains("dias")) {
             minutos = extraerCantidad(textoChip, "día") * 24 * 60;
+            Log.d("MINUTOS DE DIAS", String.valueOf(minutos));
         }
         // Verificar si el texto del chip es "mensual"
         else if (textoChip.equals("mensual")) {
             minutos = 30 * 24 * 60; // Asumiendo un mes de 30 días
+            Log.d("MINUTOS DE MENSUAL", String.valueOf(minutos));
         }
         // Verificar si el texto del chip es "trimestral"
         else if (textoChip.equals("trimestral")) {
             minutos = 3 * 30 * 24 * 60; // Asumiendo un trimestre de 3 meses
+            Log.d("MINUTOS DE TRIMESTRAL", String.valueOf(minutos));
         }
         // Verificar si el texto del chip es "anual"
         else if (textoChip.equals("anual")) {
             minutos = 365 * 24 * 60; // Asumiendo un año de 365 días
+            Log.d("MINUTOS DE AÑO", String.valueOf(minutos));
         }
 
         return minutos;
