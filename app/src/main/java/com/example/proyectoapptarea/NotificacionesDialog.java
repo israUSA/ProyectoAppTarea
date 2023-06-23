@@ -6,20 +6,46 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.app.Dialog;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.CompoundButton;
+
+import com.example.proyectoapptarea.BD.BDTareaApp;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class NotificacionesDialog extends DialogFragment {
 
     private Toolbar toolbar;
-    public static final String TAG = "example_dialog";
+    private int ID;
+    private List<Integer> chipGroupIds;
+    private Calendar calendario;
+    private Date fechaActual;
+    private Date fechaFinalizacion;
+    private long diferenciaTiempo;
+    private long minutosRestantes;
+    public static final String TAG = "Intervalo Recordatorios";
 
-    public static NotificacionesDialog display(FragmentManager fragmentManager) {
+
+    public static NotificacionesDialog display(FragmentManager fragmentManager, int ID) {
         NotificacionesDialog exampleDialog = new NotificacionesDialog();
         exampleDialog.show(fragmentManager, TAG);
+        exampleDialog.ID = ID;
         return exampleDialog;
     }
 
@@ -32,6 +58,7 @@ public class NotificacionesDialog extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
+        Log.d("AQUI ESTA", String.valueOf(ID));
         Dialog dialog = getDialog();
         if (dialog != null) {
             int width = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -46,7 +73,38 @@ public class NotificacionesDialog extends DialogFragment {
 
         View view = inflater.inflate(R.layout.activity_notificaciones_dialog, container, false);
         toolbar = view.findViewById(R.id.toolbar);
-        // Inflate the layout to use as dialog or embedded fragment
+
+        chipGroupIds = Arrays.asList(R.id.chipGroup1, R.id.chipGroup2, R.id.chipGroup3, R.id.chipGroup4);
+        calendario  = Calendar.getInstance();
+        fechaActual = calendario.getTime();
+        fechaFinalizacion = getFechaFinalizacion();
+        diferenciaTiempo = fechaFinalizacion.getTime() - fechaActual.getTime();
+        minutosRestantes = TimeUnit.MILLISECONDS.toMinutes(diferenciaTiempo);
+
+        for (int chipGroupId : chipGroupIds) {
+            ChipGroup chipGroup = view.findViewById(chipGroupId);
+            int chipCount = chipGroup.getChildCount();
+            for (int i = 0; i < chipCount; i++) {
+                Chip chip = (Chip) chipGroup.getChildAt(i);
+                chip.setOnCheckedChangeListener(chipCheckedChangeListener);
+            }
+        }
+
+        for (int i = 0; i < chipGroupIds.size(); i++) {
+            ChipGroup chipGroup = view.findViewById(chipGroupIds.get(i));
+
+            for (int j = 0; j < chipGroup.getChildCount(); j++) {
+                Chip chip = (Chip) chipGroup.getChildAt(j);
+                int minutosChip = obtenerMinutosDesdeChip(chip);
+
+                if (minutosChip <= minutosRestantes) {
+                    chip.setEnabled(true);
+                } else {
+                    chip.setEnabled(false);
+                }
+            }
+        }
+
         return view;
     }
 
@@ -61,4 +119,98 @@ public class NotificacionesDialog extends DialogFragment {
             return true;
         });
     }
+
+    private CompoundButton.OnCheckedChangeListener chipCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (isChecked) {
+                for (int chipGroupId : chipGroupIds) {
+                    ChipGroup chipGroup = getView().findViewById(chipGroupId);
+                    int chipCount = chipGroup.getChildCount();
+                    for (int i = 0; i < chipCount; i++) {
+                        Chip chip = (Chip) chipGroup.getChildAt(i);
+                        if (chip != buttonView) {
+                            chip.setOnCheckedChangeListener(null);
+                            chip.setChecked(false);
+                            chip.setOnCheckedChangeListener(chipCheckedChangeListener);
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    private Date getFechaFinalizacion(){
+        BDTareaApp dbHelper = new BDTareaApp(getContext());
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Date fechaFinalizacion = null;
+
+        Cursor cursor = db.rawQuery("SELECT fechaVencimiento, hora FROM Tarea WHERE id = ?", new String[]{String.valueOf(ID)});
+            if (cursor.moveToFirst()) {
+                String fechaVencimiento = cursor.getString(cursor.getColumnIndex("fechaVencimiento"));
+                String hora = cursor.getString(cursor.getColumnIndex("hora"));
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+                String fechaHoraString = fechaVencimiento + " " + hora;
+
+                try {
+                    fechaFinalizacion = dateFormat.parse(fechaHoraString);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        cursor.close();
+        db.close();
+
+        return fechaFinalizacion;
+    }
+
+    private int obtenerMinutosDesdeChip(Chip chip) {
+        String textoChip = chip.getText().toString();
+        int minutos = 0;
+
+        // Verificar si el texto del chip contiene la palabra "minutos"
+        if (textoChip.contains("minutos")) {
+            minutos = extraerCantidad(textoChip, "minutos");
+        }
+        // Verificar si el texto del chip contiene la palabra "hora"
+        else if (textoChip.contains("hora")) {
+            minutos = extraerCantidad(textoChip, "hora") * 60;
+        }
+        // Verificar si el texto del chip contiene la palabra "día" o "dias"
+        else if (textoChip.contains("día") || textoChip.contains("dias")) {
+            minutos = extraerCantidad(textoChip, "día") * 24 * 60;
+        }
+        // Verificar si el texto del chip es "mensual"
+        else if (textoChip.equals("mensual")) {
+            minutos = 30 * 24 * 60; // Asumiendo un mes de 30 días
+        }
+        // Verificar si el texto del chip es "trimestral"
+        else if (textoChip.equals("trimestral")) {
+            minutos = 3 * 30 * 24 * 60; // Asumiendo un trimestre de 3 meses
+        }
+        // Verificar si el texto del chip es "anual"
+        else if (textoChip.equals("anual")) {
+            minutos = 365 * 24 * 60; // Asumiendo un año de 365 días
+        }
+
+        return minutos;
+    }
+
+    private int extraerCantidad(String texto, String unidad) {
+        String[] partes = texto.split(" ");
+        String cantidadTexto = partes[0];
+
+        int cantidad = 0;
+
+        try {
+            cantidad = Integer.parseInt(cantidadTexto);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        return cantidad;
+    }
+
 }

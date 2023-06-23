@@ -23,6 +23,15 @@ public class listaTareas {
         this.hora = hora;
     }
 
+    public listaTareas(int id,  String titulo_tarea, String descripcion, String fechaVencimiento, String hora) {
+        this.id = id;
+        this.fechaCreacion = fechaCreacion;
+        this.titulo_tarea = titulo_tarea;
+        this.descripcion = descripcion;
+        this.fechaVencimiento = fechaVencimiento;
+        this.hora = hora;
+    }
+
     public listaTareas() {
 
     }

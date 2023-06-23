@@ -159,6 +159,7 @@ public class activity_ver_tarea extends AppCompatActivity {
 
         if (itemId == R.id.it_notificaciones) {
             Log.d("Menu", "Notificaciones");
+            Log.d("ID", String.valueOf(tareas.getId()));
             showDialog();
             return true;
 
@@ -168,7 +169,7 @@ public class activity_ver_tarea extends AppCompatActivity {
     }
 
     public void showDialog() {
-        NotificacionesDialog.display(getSupportFragmentManager());
+        NotificacionesDialog.display(getSupportFragmentManager(), tareas.getId());
     }
 
 }

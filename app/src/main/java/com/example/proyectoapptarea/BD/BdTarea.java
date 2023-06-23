@@ -39,6 +39,7 @@ public class BdTarea extends BDTareaApp{
         if(cursorTarea.moveToPosition(id)) {
 
             tareas = new listaTareas();
+            tareas.setId(cursorTarea.getInt(0));
             tareas.setTitulo_tarea(cursorTarea.getString(2));
             tareas.setFechaVencimiento(cursorTarea.getString(4));
             tareas.setDescripcion(cursorTarea.getString(3));
@@ -56,6 +57,8 @@ public class BdTarea extends BDTareaApp{
         return tareas;
 
     }
+
+
 
     public boolean editarTarea(int id, String nombre, String fecha, String descripcion) {
 
