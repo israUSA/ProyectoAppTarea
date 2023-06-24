@@ -5,7 +5,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -17,6 +21,7 @@ import android.view.Window;
 import android.widget.CompoundButton;
 
 import com.example.proyectoapptarea.BD.BDTareaApp;
+import com.example.proyectoapptarea.adaptador.NotificacionReceiver;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -136,6 +141,9 @@ public class NotificacionesDialog extends DialogFragment {
                         }
                     }
                 }
+
+                int minutosIntervalo = obtenerMinutosDesdeChip((Chip) buttonView);
+                programarNotificacion(minutosIntervalo);
             }
         }
     };
@@ -217,6 +225,37 @@ public class NotificacionesDialog extends DialogFragment {
         }
 
         return cantidad;
+    }
+
+    private void programarNotificacion(int minutosIntervalo) {
+        Log.d("MINUTOS INTERVALO", String.valueOf(minutosIntervalo));
+        // Aquí debes implementar la lógica para programar una notificación
+        // con el intervalo de tiempo especificado en minutosIntervalo.
+        // Puedes usar la clase AlarmManager para programar la notificación,
+        // o cualquier otro método que desees utilizar para mostrar las notificaciones.
+        // Recuerda que esto puede variar dependiendo de tu implementación específica.
+        // A continuación, se muestra un ejemplo básico para programar una notificación usando AlarmManager:
+
+        Context context = requireContext();
+
+        Intent intent = new Intent(context, NotificacionReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        // Calcula el tiempo en milisegundos para el intervalo seleccionado
+        Log.d("ANTES", "aqui antes");
+        long intervaloMillis = minutosIntervalo * 60 * 1000;
+        Log.d("MINUTOS INTERVALO", String.valueOf(minutosIntervalo));
+        Log.d("INTERVALOMILLIS", String.valueOf(intervaloMillis));
+
+        // Calcula el tiempo de inicio de la notificación
+        long tiempoInicioMillis = System.currentTimeMillis() + intervaloMillis;
+        Log.d("TIEMPO DE INICIO", String.valueOf(tiempoInicioMillis));
+
+        // Programa la notificación repetitiva utilizando AlarmManager
+        // El siguiente ejemplo programa una notificación que se repetirá cada 'intervaloMillis' milisegundos
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, tiempoInicioMillis, intervaloMillis, pendingIntent);
     }
 
 }
