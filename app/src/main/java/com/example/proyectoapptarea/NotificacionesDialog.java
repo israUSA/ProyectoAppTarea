@@ -72,7 +72,6 @@ public class NotificacionesDialog extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        Log.d("AQUI ESTA", String.valueOf(ID));
         Dialog dialog = getDialog();
         if (dialog != null) {
             int width = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -104,6 +103,7 @@ public class NotificacionesDialog extends DialogFragment {
             }
         }
 
+        //Inactiva chips que superen con su rango la finalizacion de la tarea
         for (int i = 0; i < chipGroupIds.size(); i++) {
             ChipGroup chipGroup = view.findViewById(chipGroupIds.get(i));
 
@@ -134,6 +134,7 @@ public class NotificacionesDialog extends DialogFragment {
         });
     }
 
+    //Agrega a cada chip de cada groupchip un listener
     private CompoundButton.OnCheckedChangeListener chipCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -157,6 +158,7 @@ public class NotificacionesDialog extends DialogFragment {
         }
     };
 
+    //Obtiene la fecha de finalizacion de la tarea por medio de una consulta a la BD
     private Date getFechaFinalizacion(){
         BDTareaApp dbHelper = new BDTareaApp(getContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -187,34 +189,34 @@ public class NotificacionesDialog extends DialogFragment {
         String textoChip = chip.getText().toString();
         int minutos = 0;
 
-        // Verificar si el texto del chip contiene la palabra "minutos"
+        // Verifica si el texto del chip contiene la palabra "minutos o minuto"
         if (textoChip.contains("minutos") || textoChip.contains("minuto")) {
             minutos = extraerCantidad(textoChip, "minutos");
             Log.d("MINUTOS DE MINUTOS", String.valueOf(minutos));
         }
-        // Verificar si el texto del chip contiene la palabra "hora"
+        // Verifica si el texto del chip contiene la palabra "hora"
         else if (textoChip.contains("hora")) {
             minutos = extraerCantidad(textoChip, "hora") * 60;
             Log.d("MINUTOS DE HORAS", String.valueOf(minutos));
         }
-        // Verificar si el texto del chip contiene la palabra "día" o "dias"
+        // Verifica si el texto del chip contiene la palabra "día" o "dias"
         else if (textoChip.contains("dia") || textoChip.contains("dias")) {
             minutos = extraerCantidad(textoChip, "día") * 24 * 60;
             Log.d("MINUTOS DE DIAS", String.valueOf(minutos));
         }
-        // Verificar si el texto del chip es "mensual"
+        // Verifica si el texto del chip es "mensual"
         else if (textoChip.equals("mensual")) {
-            minutos = 30 * 24 * 60; // Asumiendo un mes de 30 días
+            minutos = 30 * 24 * 60; //Mes de 30 días
             Log.d("MINUTOS DE MENSUAL", String.valueOf(minutos));
         }
-        // Verificar si el texto del chip es "trimestral"
+        // Verifica si el texto del chip es "trimestral"
         else if (textoChip.equals("trimestral")) {
-            minutos = 3 * 30 * 24 * 60; // Asumiendo un trimestre de 3 meses
+            minutos = 3 * 30 * 24 * 60;
             Log.d("MINUTOS DE TRIMESTRAL", String.valueOf(minutos));
         }
-        // Verificar si el texto del chip es "anual"
+        // Verifica si el texto del chip es "anual"
         else if (textoChip.equals("anual")) {
-            minutos = 365 * 24 * 60; // Asumiendo un año de 365 días
+            minutos = 365 * 24 * 60; // año de 365 días
             Log.d("MINUTOS DE AÑO", String.valueOf(minutos));
         }
 
@@ -259,12 +261,12 @@ public class NotificacionesDialog extends DialogFragment {
 
 
         // Programa la notificación repetitiva utilizando AlarmManager
-        // El siguiente ejemplo programa una notificación que se repetirá cada 'intervaloMillis' milisegundos
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, tiempoInicioMillis, intervaloMillis, pendingIntent);
         Log.d("TIEMPO DE INICIO", String.valueOf(tiempoInicioMillis));
         Log.d("NOTIFICACION", "NOTIFICACION PUESTA EN MARCHA");
     }
 
+    //Canal donde iran las notificaciones
     private void crearCanal(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence nombreCanal = "Nombre del Canal";

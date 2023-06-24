@@ -10,20 +10,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            app:cardCornerRadius="4dp"
-            app:cardElevation="4dp">
+        android:orientation="vertical"
+        android:gravity="center"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="4dp"
+        >
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_Agregar"
-                android:layout_width="168dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp">
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginBottom="4dp"
+                android:onClick="agregarTarea">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -34,9 +35,9 @@
                     <!-- Media -->
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="194dp"
+                        android:layout_height="215dp"
+                        android:layout_marginTop="16dp"
                         android:contentDescription="iconos"
-
                         app:srcCompat="@drawable/agg_tareas" />
 
                     <LinearLayout
@@ -47,18 +48,24 @@
 
                         <!-- Title, secondary and supporting text -->
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Agrega una nueva tarea"
-                            android:textAppearance="?attr/textAppearanceTitleMedium" />
+                            android:fontFamily="@font/roboto"
+                            android:textStyle="bold"
+                            android:textSize="10pt"
+                            android:textAlignment="center"
+                            android:layout_marginTop="8dp"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:text="Mantente siempre organizado"
-                            android:textAppearance="?attr/textAppearanceBodyMedium"
-                            android:textColor="?android:attr/textColorSecondary" />
+                            android:text="Mantente siempre organizado!"
+                            android:fontFamily="@font/roboto"
+                            android:textAlignment="center"
+                            android:textSize="9pt"
+                            />
 
                     </LinearLayout>
 
@@ -70,12 +77,6 @@
                         android:gravity="right"
                         android:orientation="horizontal">
 
-                        <com.google.android.material.button.MaterialButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginEnd="8dp"
-                            android:onClick="agregarTarea"
-                            android:text="Agregar" />
 
 
                     </LinearLayout>
@@ -86,12 +87,16 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/mostrar_tarea"
-                android:layout_width="168dp"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp">
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginTop="4dp"
+                android:onClick="mostrarTarea">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingLeft="10dp">
@@ -101,8 +106,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="194dp"
                         android:contentDescription="iconos"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/tareas" />
+                        app:srcCompat="@drawable/tareas1"
+                        android:layout_marginTop="16dp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -112,18 +117,24 @@
 
                         <!-- Title, secondary and supporting text -->
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Mira tus tareas pendientes"
-                            android:textAppearance="?attr/textAppearanceTitleMedium" />
+                            android:fontFamily="@font/roboto"
+                            android:textStyle="bold"
+                            android:textSize="10pt"
+                            android:textAlignment="center"
+                            android:layout_marginTop="16dp"
+                            />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
+                            android:fontFamily="@font/roboto"
                             android:text="Sigue cumpliendo tus tareas"
-                            android:textAppearance="?attr/textAppearanceBodyMedium"
-                            android:textColor="?android:attr/textColorSecondary" />
+                            android:textAlignment="center"
+                            android:textSize="9pt"/>
 
                     </LinearLayout>
 
@@ -134,23 +145,11 @@
                         android:layout_margin="8dp"
                         android:gravity="bottom|right"
                         android:orientation="horizontal">
-
-                        <com.google.android.material.button.MaterialButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:onClick="mostrarTarea"
-                            android:text="Mostrar" />
-
                     </LinearLayout>
 
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
-
-
-        </LinearLayout>
-
 
     </LinearLayout>
 

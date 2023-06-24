@@ -24,15 +24,12 @@ public class NotificacionReceiver extends BroadcastReceiver {
         String contentTitle = intent.getStringExtra("ContentTitle");
         String contentText = intent.getStringExtra("ContentText");
 
-        // Por ejemplo, puedes crear una notificación utilizando NotificationCompat.Builder:
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "canal_alarma")
                 .setContentTitle(contentTitle)
                 .setContentText(contentText)
                 .setSmallIcon(R.drawable.sharp_access_alarm_24);
 
-        // Aquí puedes configurar cualquier otra opción de la notificación, como el sonido, vibración, etc.
-
-        // Obtén el administrador de notificaciones y muestra la notificación
+        // Obtiene el administrador de notificaciones y muestra la notificación
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.notify(1, builder.build());
         Log.d("RECEIVER", "TERMINACION DE RECEIVER");
