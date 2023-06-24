@@ -102,7 +102,7 @@ public class listaAdaptador extends RecyclerView.Adapter<listaAdaptador.ViewHold
                 horaLimite.setText(item.gethora());
                 viewCompletada.setVisibility(View.INVISIBLE);
             }else{
-                cards.setCardBackgroundColor(0xFF00FF00);
+                cards.setCardBackgroundColor(0xFF00639B);
                 ViuwTitulo.setText(item.getTitulo_tarea());
                 ViuwDescripcion.setText(item.getDescripcion());
                 ViuwFechaLimite.setText(item.getFechaVencimiento());
