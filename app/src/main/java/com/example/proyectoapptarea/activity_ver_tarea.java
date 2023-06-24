@@ -169,7 +169,7 @@ public class activity_ver_tarea extends AppCompatActivity {
     }
 
     public void showDialog() {
-        NotificacionesDialog.display(getSupportFragmentManager(), tareas.getId());
+        NotificacionesDialog.display(getSupportFragmentManager(), tareas.getId(), tareas.getTitulo_tarea(), tareas.getDescripcion());
     }
 
 }

@@ -2,16 +2,20 @@ package com.example.proyectoapptarea;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +25,7 @@ import android.view.Window;
 import android.widget.CompoundButton;
 
 import com.example.proyectoapptarea.BD.BDTareaApp;
-import com.example.proyectoapptarea.adaptador.NotificacionReceiver;
+import com.example.proyectoapptarea.NotificacionReceiver;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -38,6 +42,8 @@ public class NotificacionesDialog extends DialogFragment {
 
     private Toolbar toolbar;
     private int ID;
+    private String nombreTarea;
+    private String descripcionTarea;
     private List<Integer> chipGroupIds;
     private Calendar calendario;
     private Date fechaActual;
@@ -47,10 +53,12 @@ public class NotificacionesDialog extends DialogFragment {
     public static final String TAG = "Intervalo Recordatorios";
 
 
-    public static NotificacionesDialog display(FragmentManager fragmentManager, int ID) {
+    public static NotificacionesDialog display(FragmentManager fragmentManager, int ID, String nombreTarea, String descripcionTarea) {
         NotificacionesDialog exampleDialog = new NotificacionesDialog();
         exampleDialog.show(fragmentManager, TAG);
         exampleDialog.ID = ID;
+        exampleDialog.nombreTarea = nombreTarea;
+        exampleDialog.descripcionTarea = descripcionTarea;
         return exampleDialog;
     }
 
@@ -58,6 +66,7 @@ public class NotificacionesDialog extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme_FullScreenDialog);
+        crearCanal();
     }
 
     @Override
@@ -179,7 +188,7 @@ public class NotificacionesDialog extends DialogFragment {
         int minutos = 0;
 
         // Verificar si el texto del chip contiene la palabra "minutos"
-        if (textoChip.contains("minutos")) {
+        if (textoChip.contains("minutos") || textoChip.contains("minuto")) {
             minutos = extraerCantidad(textoChip, "minutos");
             Log.d("MINUTOS DE MINUTOS", String.valueOf(minutos));
         }
@@ -229,17 +238,13 @@ public class NotificacionesDialog extends DialogFragment {
 
     private void programarNotificacion(int minutosIntervalo) {
         Log.d("MINUTOS INTERVALO", String.valueOf(minutosIntervalo));
-        // Aquí debes implementar la lógica para programar una notificación
-        // con el intervalo de tiempo especificado en minutosIntervalo.
-        // Puedes usar la clase AlarmManager para programar la notificación,
-        // o cualquier otro método que desees utilizar para mostrar las notificaciones.
-        // Recuerda que esto puede variar dependiendo de tu implementación específica.
-        // A continuación, se muestra un ejemplo básico para programar una notificación usando AlarmManager:
 
         Context context = requireContext();
 
         Intent intent = new Intent(context, NotificacionReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        intent.putExtra("ContentTitle", nombreTarea);
+        intent.putExtra("ContentText", descripcionTarea);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
@@ -249,13 +254,31 @@ public class NotificacionesDialog extends DialogFragment {
         Log.d("MINUTOS INTERVALO", String.valueOf(minutosIntervalo));
         Log.d("INTERVALOMILLIS", String.valueOf(intervaloMillis));
 
-        // Calcula el tiempo de inicio de la notificación
-        long tiempoInicioMillis = System.currentTimeMillis() + intervaloMillis;
-        Log.d("TIEMPO DE INICIO", String.valueOf(tiempoInicioMillis));
+        // Calcula el tiempo de inicio de la notificaciónn
+        long tiempoInicioMillis = Calendar.getInstance().getTimeInMillis() + intervaloMillis;
+
 
         // Programa la notificación repetitiva utilizando AlarmManager
         // El siguiente ejemplo programa una notificación que se repetirá cada 'intervaloMillis' milisegundos
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, tiempoInicioMillis, intervaloMillis, pendingIntent);
+        Log.d("TIEMPO DE INICIO", String.valueOf(tiempoInicioMillis));
+        Log.d("NOTIFICACION", "NOTIFICACION PUESTA EN MARCHA");
+    }
+
+    private void crearCanal(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence nombreCanal = "Nombre del Canal";
+            String descripcionCanal = "Descripción del Canal";
+            int importancia = NotificationManager.IMPORTANCE_DEFAULT;
+
+            NotificationChannel canal = new NotificationChannel("canal_alarma", nombreCanal, importancia);
+            canal.setDescription(descripcionCanal);
+
+            NotificationManager notificationManager = getContext().getSystemService(NotificationManager.class);
+
+            notificationManager.createNotificationChannel(canal);
+            Log.d("CANAL", "CANAL CREADO");
+        }
     }
 
 }
