@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyectoapptarea.R;
@@ -61,10 +62,12 @@ public class listaAdaptador extends RecyclerView.Adapter<listaAdaptador.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView ViuwTitulo, ViuwDescripcion, ViuwFechaLimite,horaLimite;
 
-        TextView viewNombre, viewFecha, viewDescripcion;
+        TextView viewNombre, viewFecha, viewDescripcion, viewCompletada;
+        CardView cards;
 
         ViewHolder(View itemView){
             super(itemView);
+            cards = itemView.findViewById(R.id.card);
             ViuwTitulo = itemView.findViewById(R.id.ViuwTitulo);
             ViuwDescripcion = itemView.findViewById(R.id.ViuwDescripcion);
             ViuwFechaLimite = itemView.findViewById(R.id.ViuwFechaLimite);
@@ -73,7 +76,7 @@ public class listaAdaptador extends RecyclerView.Adapter<listaAdaptador.ViewHold
             viewNombre = itemView.findViewById(R.id.viewNombre);
             viewFecha = itemView.findViewById(R.id.viewFecha);
             viewDescripcion = itemView.findViewById(R.id.viewDescripcion);
-
+            viewCompletada = itemView.findViewById(R.id.viewCompletada);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -92,11 +95,21 @@ public class listaAdaptador extends RecyclerView.Adapter<listaAdaptador.ViewHold
         }
 
         void bindData (final listaTareas item){
-            ViuwTitulo.setText(item.getTitulo_tarea());
-            ViuwDescripcion.setText(item.getDescripcion());
-            ViuwFechaLimite.setText(item.getFechaVencimiento());
-            horaLimite.setText(item.gethora());
+            if(item.getCompletada() == 0){
+                ViuwTitulo.setText(item.getTitulo_tarea());
+                ViuwDescripcion.setText(item.getDescripcion());
+                ViuwFechaLimite.setText(item.getFechaVencimiento());
+                horaLimite.setText(item.gethora());
+                viewCompletada.setVisibility(View.INVISIBLE);
+            }else{
+                cards.setCardBackgroundColor(0xFF00FF00);
+                ViuwTitulo.setText(item.getTitulo_tarea());
+                ViuwDescripcion.setText(item.getDescripcion());
+                ViuwFechaLimite.setText(item.getFechaVencimiento());
+                horaLimite.setText(item.gethora());
+                viewCompletada.setVisibility(View.INVISIBLE);
+            }
+
         }
     }
-
 }

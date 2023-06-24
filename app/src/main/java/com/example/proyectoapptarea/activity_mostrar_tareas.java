@@ -53,20 +53,21 @@ public class activity_mostrar_tareas extends AppCompatActivity {
         if (db != null) {
             elements = new ArrayList<>();
 
-            Cursor ct = db.rawQuery("SELECT titulo_tarea, descripcion, fechaVencimiento,hora FROM Tarea", null);
+            Cursor ct = db.rawQuery("SELECT titulo_tarea, descripcion, fechaVencimiento,hora,completada FROM Tarea", null);
             if (ct.moveToFirst()) {
                 do {
+                    int completada = ct.getInt(ct.getColumnIndex("completada"));
                     String titulo = ct.getString(ct.getColumnIndex("titulo_tarea"));
                     String descripcion = ct.getString(ct.getColumnIndex("descripcion"));
                     String fechaLimite = ct.getString(ct.getColumnIndex("fechaVencimiento"));
                     String hora = ct.getString(ct.getColumnIndex("hora"));
-                    listaTareas tarea = new listaTareas(titulo, descripcion, fechaLimite, hora);
+                    listaTareas tarea = new listaTareas(titulo, descripcion, fechaLimite, hora, completada);
 
                     elements.add(tarea);
                 } while (ct.moveToNext());
             }
             ct.close();
-            //db.close();
+            db.close();
         }
     }
 
@@ -84,17 +85,19 @@ public class activity_mostrar_tareas extends AppCompatActivity {
 
             if (ct.moveToFirst()) {
                 do {
+                    int completada = ct.getInt(ct.getColumnIndex("completada"));
                     String titulo = ct.getString(ct.getColumnIndex("titulo_tarea"));
                     String descripcion = ct.getString(ct.getColumnIndex("descripcion"));
                     String fechaLimite = ct.getString(ct.getColumnIndex("fechaVencimiento"));
                     String hora = ct.getString(ct.getColumnIndex("hora"));
-                    listaTareas tarea = new listaTareas(titulo, descripcion, fechaLimite, hora);
+                    listaTareas tarea = new listaTareas(titulo, descripcion, fechaLimite, hora, completada);
 
                     elements.add(tarea);
                 } while (ct.moveToNext());
             }
             ct.close();
             db.close();
+            dataInit();
         }
     }
 
@@ -112,17 +115,19 @@ public class activity_mostrar_tareas extends AppCompatActivity {
 
             if (ct.moveToFirst()) {
                 do {
+                    int completada = ct.getInt(ct.getColumnIndex("completada"));
                     String titulo = ct.getString(ct.getColumnIndex("titulo_tarea"));
                     String descripcion = ct.getString(ct.getColumnIndex("descripcion"));
                     String fechaLimite = ct.getString(ct.getColumnIndex("fechaVencimiento"));
                     String hora = ct.getString(ct.getColumnIndex("hora"));
-                    listaTareas tarea = new listaTareas(titulo, descripcion, fechaLimite, hora);
+                    listaTareas tarea = new listaTareas(titulo, descripcion, fechaLimite, hora, completada);
 
                     elements.add(tarea);
                 } while (ct.moveToNext());
             }
             ct.close();
             db.close();
+            dataInit();
         }
     }
 
@@ -140,23 +145,29 @@ public class activity_mostrar_tareas extends AppCompatActivity {
 
             if (ct.moveToFirst()) {
                 do {
+                    int completada = ct.getInt(ct.getColumnIndex("completada"));
                     String titulo = ct.getString(ct.getColumnIndex("titulo_tarea"));
                     String descripcion = ct.getString(ct.getColumnIndex("descripcion"));
                     String fechaLimite = ct.getString(ct.getColumnIndex("fechaVencimiento"));
                     String hora = ct.getString(ct.getColumnIndex("hora"));
-                    listaTareas tarea = new listaTareas(titulo, descripcion, fechaLimite, hora);
+                    listaTareas tarea = new listaTareas(titulo, descripcion, fechaLimite, hora, completada);
 
                     elements.add(tarea);
                 } while (ct.moveToNext());
             }
             ct.close();
             db.close();
+            dataInit();
         }
     }
 
 
     public void init() {
         obtenerDatosDeLaBaseDeDatos();
+        dataInit();
+    }
+
+    public void dataInit(){
         listAdapter = new listaAdaptador(elements, this);
         RecyclerView recyclerView = findViewById(R.id.cardTareas);
         recyclerView.setHasFixedSize(true);

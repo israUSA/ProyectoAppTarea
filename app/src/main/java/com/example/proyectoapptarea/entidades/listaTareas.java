@@ -7,20 +7,21 @@ import android.widget.TextView;
 import java.sql.Date;
 
 public class listaTareas {
-    private int id;
+    private int id, completada;
     private String fechaCreacion;
     private String titulo_tarea;
     private String descripcion;
     private String fechaVencimiento;
     private String hora;
 
-    public listaTareas(String titulo_tarea, String descripcion, String fechaVencimiento, String hora) {
+    public listaTareas(String titulo_tarea, String descripcion, String fechaVencimiento, String hora, int completada) {
         this.id = id;
         this.fechaCreacion = fechaCreacion;
         this.titulo_tarea = titulo_tarea;
         this.descripcion = descripcion;
         this.fechaVencimiento = fechaVencimiento;
         this.hora = hora;
+        this.completada = completada;
     }
 
     public listaTareas(int id,  String titulo_tarea, String descripcion, String fechaVencimiento, String hora) {
@@ -81,5 +82,13 @@ public class listaTareas {
     }
     public void sethora(String hora) {
         this.hora = hora;
+    }
+
+    public int getCompletada() {
+        return completada;
+    }
+
+    public void setCompletada(int completada) {
+        this.completada = completada;
     }
 }
