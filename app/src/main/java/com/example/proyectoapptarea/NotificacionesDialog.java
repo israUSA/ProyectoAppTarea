@@ -270,7 +270,7 @@ public class NotificacionesDialog extends DialogFragment {
     private void crearCanal(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence nombreCanal = "Nombre del Canal";
-            String descripcionCanal = "Descripción del Canal";
+            String descripcionCanal = "Canal para las alarmas";
             int importancia = NotificationManager.IMPORTANCE_DEFAULT;
 
             NotificationChannel canal = new NotificationChannel("canal_alarma", nombreCanal, importancia);
